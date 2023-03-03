@@ -6,9 +6,12 @@ namespace BMICalculator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the program! Please choose an option:");
+            Console.WriteLine("\nC# Apps");
+            Console.WriteLine("by Fudail Khan");
+            Console.WriteLine("\nPlease choose an app to use:");
             Console.WriteLine("1. Distance converter");
             Console.WriteLine("2. BMI calculator");
+            Console.Write("\nChoice: ");
 
             string input = Console.ReadLine();
             int choice;
@@ -29,9 +32,10 @@ namespace BMICalculator
                     break;
             }
 
-            Console.WriteLine("Would you like to use the program again?");
+            Console.WriteLine("\nWould you like to use the program again?");
             Console.WriteLine("1. Yes");
             Console.WriteLine("2. No");
+            Console.Write("\nChoice: ");
 
             input = Console.ReadLine();
 
@@ -49,21 +53,18 @@ namespace BMICalculator
 
         static void DistanceConverter()
         {
-            Console.WriteLine("");
+            Console.WriteLine("\n===================================================");
             Console.WriteLine("Distance Converter");
-            Console.WriteLine("By Fudail Khan");
-            Console.WriteLine("");
 
-            Console.WriteLine("Select unit to convert from:");
+            Console.WriteLine("\nSelect unit to convert from:");
             Console.WriteLine("1. Miles");
             Console.WriteLine("2. Feet");
             Console.WriteLine("3. Meters");
-            Console.WriteLine("");
 
             int fromUnit;
             while (true)
             {
-                Console.Write("Enter your choice (1-3): ");
+                Console.Write("\nChoice: ");
                 if (!int.TryParse(Console.ReadLine(), out fromUnit) || fromUnit < 1 || fromUnit > 3)
                 {
                     Console.WriteLine("Invalid choice. Please enter a number between 1 and 3.");
@@ -73,18 +74,16 @@ namespace BMICalculator
                     break;
                 }
             }
-            Console.WriteLine("");
 
-            Console.WriteLine("Select unit to convert to:");
+            Console.WriteLine("\nSelect unit to convert to:");
             Console.WriteLine("1. Miles");
             Console.WriteLine("2. Feet");
             Console.WriteLine("3. Meters");
-            Console.WriteLine("");
 
             int toUnit;
             while (true)
             {
-                Console.Write("Enter your choice (1-3): ");
+                Console.Write("\nChoice: ");
                 if (!int.TryParse(Console.ReadLine(), out toUnit) || toUnit < 1 || toUnit > 3)
                 {
                     Console.WriteLine("Invalid choice. Please enter a number between 1 and 3.");
@@ -93,17 +92,15 @@ namespace BMICalculator
                 {
                     break;
                 }
-            }
-            Console.WriteLine("");
+            };
 
-            Console.Write("Enter the distance: ");
+            Console.Write("\nEnter the distance: ");
             double distance;
             while (!double.TryParse(Console.ReadLine(), out distance))
             {
                 Console.WriteLine("Invalid distance. Please enter a valid number.");
                 Console.Write("Enter the distance: ");
             }
-            Console.WriteLine("");
 
             string fromUnitStr = "";
             string toUnitStr = "";
@@ -168,140 +165,100 @@ namespace BMICalculator
             }
 
             Console.WriteLine("{0} {1} is equal to {2} {3}.", distance, fromUnitStr, convertedDistance, toUnitStr);
-            Console.ReadLine();
         }
 
         static void BmiCalculator()
         {
-            Console.WriteLine("BMI Calculator");
-            Console.WriteLine("---------------");
-            Console.WriteLine("This application will calculate your Body Mass Index (BMI) and provide your WHO weight status.");
-            Console.WriteLine("");
-
-            Console.WriteLine("Please select your preferred units of measurement:");
+            Console.WriteLine("\n===================================================");
+            Console.WriteLine("BMI Calculator\n");
+            Console.WriteLine("Please select which units you would like to use:");
             Console.WriteLine("1. Metric");
             Console.WriteLine("2. Imperial");
-            Console.WriteLine("");
-            Console.Write("Choice: ");
 
-            int choice = 0;
-            double weight = 0.0;
-            double height = 0.0;
-
-            try
+            int choice;
+            bool validChoice;
+            do
             {
-                choice = int.Parse(Console.ReadLine());
+                Console.Write("\nChoice: ");
+                validChoice = int.TryParse(Console.ReadLine(), out choice);
+            } while (!validChoice || (choice != 1 && choice != 2));
 
-                if (choice != 1 && choice != 2)
-                {
-                    throw new ArgumentException("Invalid choice entered.");
-                }
+            double weight;
+            double height;
+            string weightUnit;
+            string heightUnit;
 
-                Console.WriteLine("");
-                Console.Write("Please enter your weight in kilograms: ");
-
-                if (choice == 1)
-                {
-                    weight = double.Parse(Console.ReadLine());
-
-                    if (weight <= 0)
-                    {
-                        throw new ArgumentException("Weight must be greater than zero.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("");
-                    Console.Write("Stones: ");
-                    double stones = double.Parse(Console.ReadLine());
-
-                    Console.Write("Pounds: ");
-                    double pounds = double.Parse(Console.ReadLine());
-
-                    if (stones < 0 || pounds < 0)
-                    {
-                        throw new ArgumentException("Invalid weight entered.");
-                    }
-
-                    weight = (stones * 14) + pounds;
-                }
-
-                Console.Write("Please enter your height in meters: ");
-
-                if (choice == 1)
-                {
-                    height = double.Parse(Console.ReadLine());
-
-                    if (height <= 0)
-                    {
-                        throw new ArgumentException("Height must be greater than zero.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("");
-                    Console.Write("Feet: ");
-                    double feet = double.Parse(Console.ReadLine());
-
-                    Console.Write("Inches: ");
-                    double inches = double.Parse(Console.ReadLine());
-
-                    if (feet < 0 || inches < 0 || inches >= 12)
-                    {
-                        throw new ArgumentException("Invalid height entered.");
-                    }
-
-                    height = (feet * 12) + inches;
-                }
-
-                double bmi = 0.0;
-
-                if (choice == 1)
-                {
-                    bmi = weight / Math.Pow(height, 2);
-                }
-                else
-                {
-                    bmi = (weight * 703) / Math.Pow(height, 2);
-                }
-
-                Console.WriteLine("");
-                Console.WriteLine($"Your BMI is {bmi:F2}.");
-
-                if (bmi < 18.5)
-                {
-                    Console.WriteLine("WHO Weight Status: Underweight");
-                }
-                else if (bmi < 25.0)
-                {
-                    Console.WriteLine("WHO Weight Status: Normal");
-                }
-                else if (bmi < 30.0)
-                {
-                    Console.WriteLine("WHO Weight Status: Overweight");
-                }
-                else if (bmi < 35.0)
-                {
-                    Console.WriteLine("WHO Weight Status: Obese Class I");
-                }
-                else if (bmi < 40.0)
-                {
-                    Console.WriteLine("WHO Weight Status: Obese Class II");
-                }
-                else
-                {
-                    Console.WriteLine("WHO Weight Status: Obese Class III");
-                }
-
-                Console.WriteLine("Press any key to exit.");
-                Console.ReadKey();
-            }
-            catch (Exception ex)
+            if (choice == 1)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine("Press any key to exit.");
-                Console.ReadKey();
+                weightUnit = "kg";
+                heightUnit = "m";
+                Console.Write("\nEnter your weight in kilograms: ");
+                while (!double.TryParse(Console.ReadLine(), out weight) || weight <= 0)
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid weight.");
+                    Console.Write("\nEnter your weight in kilograms: ");
+                }
+
+                Console.Write("Enter your height in meters: ");
+                while (!double.TryParse(Console.ReadLine(), out height) || height <= 0)
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid height.");
+                    Console.Write("Enter your height in meters: ");
+                }
             }
+            else
+            {
+                weightUnit = "lb";
+                heightUnit = "in";
+                Console.Write("\nEnter your weight in pounds: ");
+                while (!double.TryParse(Console.ReadLine(), out weight) || weight <= 0)
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid weight.");
+                    Console.Write("\nEnter your weight in pounds: ");
+                }
+
+                Console.Write("Enter your height in inches: ");
+                while (!double.TryParse(Console.ReadLine(), out height) || height <= 0)
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid height.");
+                    Console.Write("Enter your height in inches: ");
+                }
+
+                weight = weight * 0.45359237;
+                height = height * 0.0254;
+            }
+
+            double bmi = weight / (height * height);
+            Console.WriteLine($"\nYour BMI is {bmi:f2} kg/m²");
+
+            Console.WriteLine("\nWHO weight status:");
+            if (bmi < 18.5)
+            {
+                Console.WriteLine("Underweight");
+            }
+            else if (bmi < 25)
+            {
+                Console.WriteLine("Normal");
+            }
+            else if (bmi < 30)
+            {
+                Console.WriteLine("Overweight");
+            }
+            else if (bmi < 35)
+            {
+                Console.WriteLine("Obese Class I");
+            }
+            else if (bmi < 40)
+            {
+                Console.WriteLine("Obese Class II");
+            }
+            else
+            {
+                Console.WriteLine("Obese Class III");
+            }
+
+            Console.WriteLine("\nWARNING!");
+            Console.WriteLine("If you are Black, Asian or other minority ethnic groups, you have a higher risk.");
         }
     }
 }
